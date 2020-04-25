@@ -55,9 +55,9 @@ class VideoDetect():
 		if channelName == None:
 			if maxValue[0] >= time/90:
 				
-				return "This is an AD for " + maxValue[1]
+				return "This video is an advertisement for " + maxValue[1]
 			else:
-				return "This is Not an AD"
+				return "This video is not an advertisement"
 		score = 0
 		if channelName in self.DataSet:
 			score = self.DataSet[channelName]
@@ -65,8 +65,8 @@ class VideoDetect():
 			self.DataSet[channelName] = 0
 		if maxValue[0] >= time/90 + score * 5:
 			self.DataSet[channelName] += 1
-			return "This is an AD for " + maxValue[1]
+			return "This video is an advertisement for " + maxValue[1]
 		self.DataSet[channelName] -= 1
-		return "This is Not an AD"
+		return "This video is not an advertisement"
 
 
