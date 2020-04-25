@@ -14,8 +14,6 @@ def about():
 
 @app.route('/')
 def home():
-    id = extract_id_from_url('https://www.youtube.com/watch?v=nmqDrG09CQQ')
-    print(id, YouTubeTranscriptApi.get_transcript(id))
     return render_template('index.html', page_name='home')
 
 

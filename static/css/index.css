@@ -2,9 +2,17 @@
     color: black !important;
 }
 
+.text-white {
+    color: white !important;
+}
+
 #main-container {
     height: calc(100vh - 80px);
     text-align: center;
+}
+
+.navbar {
+    background: #ff4850 !important;
 }
 
 .heading-text {
@@ -28,6 +36,10 @@
     color: black !important;
 }
 
+iframe {
+    margin-bottom: 20px;
+}
+
 .btn-dark {
     background: repeating-linear-gradient(
   45deg,
@@ -39,11 +51,15 @@
 }
 
 .btn-dark:hover {
-    background: black !important;
+    background: #ff4850 !important;
     color: white !important;
 }
 
-span.text-emphasis {
+.nav-link {
+    font-size: 16pt;
+}
+
+span.text-emphasis, .navbar-brand {
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     color: white !important;
 }
