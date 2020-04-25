@@ -53,7 +53,7 @@ class VideoDetect():
 		print(maxValue[0])
 		channelName = rc.get_video_info(url)
 		if channelName == None:
-			if maxValue[0] >= time/90 + score * 5:
+			if maxValue[0] >= time/90:
 				
 				return "This is an AD for " + maxValue[1]
 			else:
