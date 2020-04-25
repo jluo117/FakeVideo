@@ -2,6 +2,8 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
+
+
 def NLPProcessor(text):
 	OrganizationBucket = {}
 	ProperBucket = {}
@@ -32,9 +34,11 @@ class VideoDetect():
 	def detect_video(self , url):
 		res = YouTubeTranscriptApi.get_transcript(url)
 		videoText = ""
+		time = 0
 		for output in res:
 			videoText += (output['text']) + " "
-		print(videoText)
+			time += output['duration']
+		print(time/60)
 		OrgValue , ProperValue= NLPProcessor(videoText)
 		maxValue = (0,"")
 		for entitiies in OrgValue:
@@ -42,8 +46,9 @@ class VideoDetect():
 		for entitiies in ProperValue:
 			maxValue = max(maxValue,(ProperValue[entitiies],entitiies))
 		print(OrgValue)
-		print(maxValue)
-		if maxValue[0] > 2:
+		print(ProperValue)
+		print(maxValue[0])
+		if maxValue[0] >= time/90:
 			return "This is an AD for " + maxValue[1]
 		return "This is Not an AD"
 
