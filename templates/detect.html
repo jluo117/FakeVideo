@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+    lyrics:
+    {% for lyric in lyrics %}
+        <p>{{ lyric }}</p>
+    {% endfor %}
+{% endblock %}

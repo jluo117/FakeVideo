@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+    <div id="main-container">
+        <div class="container">
+            <div class="heading-text text-black">
+                Let's make your video <span class="text-emphasis">ad-free</span>: for real, this time.
+
+            </div>
+            <div id="main-form">
+                <form method=post action="/detect">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-9">
+                            <input type="text" class="form-control" name="videoURL" id="videoURL"
+                                   placeholder="youtube.com/watch?v=oHg5SJYRHA0">
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="btn btn-dark">detect ads + bias</button>
+                        </div>
+                    </div>
+                </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

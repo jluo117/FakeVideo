@@ -1,0 +1,49 @@
+.text-black {
+    color: black !important;
+}
+
+#main-container {
+    height: calc(100vh - 80px);
+    text-align: center;
+}
+
+.heading-text {
+    padding-top: calc(40vh - 160px) !important;
+    font-weight: 800;
+    font-size: 36pt !important;
+    margin-bottom: 20px;
+}
+
+#main-form {
+    margin-left: 10%;
+    width: 80%;
+    text-align: left !important;
+}
+
+
+.form-control, .btn-dark, iframe, #about-description {
+    padding: 8px 16px;
+    border: 4px solid black;
+    border-radius: 8px !important;
+    color: black !important;
+}
+
+.btn-dark {
+    background: repeating-linear-gradient(
+  45deg,
+  #ffffff,
+  #ffffff 10px,
+  #f1f1f1 10px,
+  #f1f1f1 20px
+) !important;
+}
+
+.btn-dark:hover {
+    background: black !important;
+    color: white !important;
+}
+
+span.text-emphasis {
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    color: white !important;
+}
