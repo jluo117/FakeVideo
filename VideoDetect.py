@@ -2,6 +2,9 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
+import reteriveChannel as rc
+import requests
+from bs4 import BeautifulSoup as bs
 
 
 def NLPProcessor(text):
@@ -30,7 +33,7 @@ def NLPProcessor(text):
 class VideoDetect():
 
 	def __init__(self):
-		self.DataSet = None
+		self.DataSet = {}
 	def detect_video(self , url):
 		res = YouTubeTranscriptApi.get_transcript(url)
 		videoText = ""
@@ -48,8 +51,22 @@ class VideoDetect():
 		print(OrgValue)
 		print(ProperValue)
 		print(maxValue[0])
-		if maxValue[0] >= time/90:
+		channelName = rc.get_video_info(url)
+		if channelName == None:
+			if maxValue[0] >= time/90 + score * 5:
+				
+				return "This is an AD for " + maxValue[1]
+			else:
+				return "This is Not an AD"
+		score = 0
+		if channelName in self.DataSet:
+			score = self.DataSet[channelName]
+		else:
+			self.DataSet[channelName] = 0
+		if maxValue[0] >= time/90 + score * 5:
+			self.DataSet[channelName] += 1
 			return "This is an AD for " + maxValue[1]
+		self.DataSet[channelName] -= 1
 		return "This is Not an AD"
 
 
