@@ -33,14 +33,16 @@ class VideoDetect():
 		res = YouTubeTranscriptApi.get_transcript(url)
 		videoText = ""
 		for output in res:
-			videoText += (output['text'])
+			videoText += (output['text']) + " "
+		print(videoText)
 		OrgValue , ProperValue= NLPProcessor(videoText)
 		maxValue = (0,"")
 		for entitiies in OrgValue:
 			maxValue = max(maxValue,(OrgValue[entitiies],entitiies))
 		for entitiies in ProperValue:
 			maxValue = max(maxValue,(ProperValue[entitiies],entitiies))
-		
+		print(OrgValue)
+		print(maxValue)
 		if maxValue[0] > 2:
 			return "This is an AD for " + maxValue[1]
 		return "This is Not an AD"
