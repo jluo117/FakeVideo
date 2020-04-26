@@ -100,13 +100,17 @@ class VideoDetect():
 			return "This video is an advertisement for " + maxValue[1]
 		self.DataSet[channelName].down_vote()
 		return "This video is not an advertisement"
+
+
 	def get_last_info(self):
 		if self.lastChannel == "ERROR" or self.lastChannel == None:
 			return "ERROR with either last channel or no data is found"
 		returnVal = "Channel Name: " + self.lastChannel + '\n'
 		returnVal += "Channel Sub: " + self.DataSet[self.lastChannel].get_sub() + ' \n'
 		returnVal += "Channel Rating: " + str(self.DataSet[self.lastChannel].get_rating()) + ' \n'
-		return returnVal
+		return (self.lastChannel, self.DataSet[self.lastChannel].get_sub(), str(self.DataSet[self.lastChannel].get_rating()))
+
+
 	def get_channel_info(self, channel):
 		if channel not in self.DataSet:
 			return "Error"
