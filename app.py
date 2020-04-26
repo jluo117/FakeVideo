@@ -26,8 +26,8 @@ def detect():
         id = extract_id_from_url(url)
         res = Video_Detector.detect_video(id)
         word_freq = Video_Detector.get_popularVal()
-        return render_template('detect.html', response=res, video_url=url, freq=word_freq, channel_info=Video_Detector.get_last_info())
-    return render_template('index.html')
+        return render_template('detect.html', response=res, video_url=url, freq=word_freq, channel_info=Video_Detector.get_last_info(), page_name='video details')
+    return redirect('/')
 
 
 if __name__ == '__main__':
