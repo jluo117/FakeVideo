@@ -6,17 +6,23 @@ class Channel():
 		#print(soupData.find("span", attrs={"class": "yt-subscriber-count"}))
 		self.Channel_Url = f"https://www.youtube.com{channel_tag['href']}"
 		self.Channel_Name = channel_tag.text
-		self.Rating = 0
-		self.Sub = soupData.find("span", attrs={"class": "yt-subscriber-count"}).text.strip()
+		self.UpVote = 0
+		self.TotalVote = 0
+		subData = soupData.find("span", attrs={"class": "yt-subscriber-count"})
+		if subData != None:
+			self.Sub = soupData.find("span", attrs={"class": "yt-subscriber-count"}).text.strip()
+		else:
+			self.Sub = "Error"
 		self.Freq = {}
 	
 	def up_vote(self):
-		self.Rating += 1
-		return self.Rating
+		self.UpVote += 1
+		self.TotalVote += 1
+		
 	
 	def down_vote(self):
-		self.Rating -= 1
-		return self.Rating
+		self.TotalVote += 1
+		
 	def get_sub(self):
 		return self.Sub
 	def update_common(self,wordList):
@@ -26,7 +32,14 @@ class Channel():
 			else:
 				self.Freq[word] = wordList[word]
 	def get_rating(self):
-		return self.Rating
+
+		if self.TotalVote == 0:
+		
+			return 5
+		print("UpVote")
+		print(self.UpVote)
+		print(self.TotalVote)
+		return (self.UpVote / self.TotalVote) * 5
 	def get_k_freqWords(self,K):
 		mostCommon = []
 		for word in self.Freq:
