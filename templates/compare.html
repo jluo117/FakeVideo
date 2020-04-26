@@ -27,20 +27,22 @@
                 <div class="heading-no-padding text-black" style="text-align: left;">
                     Similarity Score: {{ rating }}
                 </div>
-                <table class="table table-light" id="table-nlp">
-                    <thead>
-                    <th scope="col">Term</th>
-                    <th scope="col">Common Occurrences</th>
-                    </thead>
-                    <tbody>
-                    {% for k,v in similarities.items() %}
-                        <tr>
-                            <th scope="col">{{ k }}</th>
-                            <th scope="col">{{ v }}</th>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+            {% if similarities %}
+                    <table class="table table-light" id="table-nlp">
+                        <thead>
+                        <th scope="col">Term</th>
+                        <th scope="col">Common Occurrences</th>
+                        </thead>
+                        <tbody>
+                        {% for k,v in similarities.items() %}
+                            <tr>
+                                <th scope="col">{{ k }}</th>
+                                <th scope="col">{{ v }}</th>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+            {% endif %}
             </div>
         </div>
     </div>
