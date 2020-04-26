@@ -4,6 +4,7 @@ from google.cloud.language import enums
 from google.cloud.language import types
 import reteriveChannel as rc
 import requests
+from Channel import Channel
 from bs4 import BeautifulSoup as bs
 
 
@@ -33,7 +34,9 @@ def NLPProcessor(text):
 class VideoDetect():
 
 	def __init__(self):
+		self.ChannelUrls = {}
 		self.DataSet = {}
+		lastChannel = None
 	def detect_video(self , url):
 		res = YouTubeTranscriptApi.get_transcript(url)
 		videoText = ""
@@ -51,22 +54,57 @@ class VideoDetect():
 		print(OrgValue)
 		print(ProperValue)
 		print(maxValue[0])
-		channelName = rc.get_video_info(url)
+		channelName , ChannelUrl,soup = rc.get_video_info(url)
 		if channelName == None:
+			self.lastChannel = "ERROR"
 			if maxValue[0] >= time/90:
 				
 				return "This video is an advertisement for " + maxValue[1]
 			else:
 				return "This video is not an advertisement"
-		score = 0
-		if channelName in self.DataSet:
-			score = self.DataSet[channelName]
-		else:
-			self.DataSet[channelName] = 0
-		if maxValue[0] >= time/90 + score * 5:
-			self.DataSet[channelName] += 1
+		self.lastChannel = channelName
+		if channelName not in self.DataSet:
+			newChannel = Channel(soup)
+			self.DataSet[channelName] = newChannel
+			self.ChannelUrls[ChannelUrl] = channelName
+		self.DataSet[channelName].update_common(OrgValue)
+		self.DataSet[channelName].update_common(ProperValue)
+		rating = self.DataSet[channelName].get_rating()
+		if maxValue[0] >= time/90 + rating * 5:
+			self.DataSet[channelName].up_vote()
 			return "This video is an advertisement for " + maxValue[1]
-		self.DataSet[channelName] -= 1
+		self.DataSet[channelName].down_vote()
 		return "This video is not an advertisement"
+	def get_last_info(self):
+		if self.lastChannel == "ERROR" or self.lastChannel == None:
+			return "ERROR with either last channel or no data is found"
+		returnVal = "Channel Name: " + self.lastChannel + '\n'
+		returnVal += "Channel Sub: " + self.DataSet[self.lastChannel].get_sub() + ' \n'
+		returnVal += "Channel Rating: " + str(self.DataSet[self.lastChannel].get_rating()) + ' \n'
+		return returnVal
+	def get_channel_info(self,channel):
+		if channel not in self.DataSet:
+			return "Error"
+		returnVal = "Channel Name: " + channel + '\n'
+		returnVal += "Channel Sub: " + self.DataSet[channel].get_sub() + ' \n'
+		returnVal += "Channel Rating: " + str(self.DataSet[channel].get_rating()) + ' \n'
+		return returnVal
+	def get_popularVal(self,channel = None,K = 3):
+		if channel == None:
+			channel = self.lastChannel
+		if channel not in self.DataSet:
+			return "Invalid Channel"
+		KFreq = self.DataSet[channel].get_k_freqWords(K)
+		returnVal = ""
+		for word in KFreq:
+			returnVal += word[0] + ": " + str(word[1]) + '\n'
+		return returnVal
+	def get_channel_name(self,url):
+		if url not in ChannelUrls:
+			return None
+		else:
+			return ChannelUrls[url]
+		
+
 
 
