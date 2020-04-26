@@ -120,10 +120,10 @@ class VideoDetect():
 			returnVal += word[0] + ": " + str(word[1]) + '\n'
 		return returnVal
 	def get_channel_name(self,url):
-		if url not in ChannelUrls:
+		if url not in self.ChannelUrls:
 			return None
 		else:
-			return ChannelUrls[url]
+			return self.ChannelUrls[url]
 		
 
 
