@@ -3,7 +3,7 @@ from VideoDetect import VideoDetect
 from youtube_transcript_api import YouTubeTranscriptApi
 from reteriveChannel import *
 app = Flask(__name__)
-
+Video_Detector = VideoDetect()
 
 def extract_id_from_url(link):
     return str(link.split('=', 1)[1])[:11]
@@ -24,12 +24,9 @@ def detect():
     if request.method == 'POST':
         url = str(request.form.get('videoURL'))
         id = extract_id_from_url(url)
-        detect = VideoDetect()
-        res = detect.detect_video(id)
-        word_freq = detect.get_popularVal()
-        channel_url = get_video_info(id)[0]
-        print(channel_url)
-        return render_template('detect.html', response=res, video_url=url, freq=word_freq, channel_info=detect.get_channel_info(channel_url))
+        res = Video_Detector.detect_video(id)
+        word_freq = Video_Detector.get_popularVal()
+        return render_template('detect.html', response=res, video_url=url, freq=word_freq, channel_info=Video_Detector.get_last_info())
     return render_template('index.html')
 
 

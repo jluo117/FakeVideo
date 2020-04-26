@@ -15,11 +15,11 @@ def correctData(Organzation,Proper):
 			massiveBucket[word] = Organzation[word]
 		else:
 			massiveBucket[word] += Organzation[word]
-	for word in Proper:
-		if word not in massiveBucket:
-			massiveBucket[word] = Proper[word]
-		else:
-			massiveBucket[word] += Proper[word]
+	# for word in Proper:
+	# 	if word not in massiveBucket:
+	# 		massiveBucket[word] = Proper[word]
+	# 	else:
+	# 		massiveBucket[word] += Proper[word]
 	for word in massiveBucket:
 		if massiveBucket[word] <= 1:
 			for toCompare in massiveBucket:
@@ -58,7 +58,11 @@ class VideoDetect():
 		self.DataSet = {}
 		self.lastChannel = None
 	def detect_video(self , url):
-		res = YouTubeTranscriptApi.get_transcript(url)
+		res = None
+		try:
+			res = YouTubeTranscriptApi.get_transcript(url)
+		except:
+			return "No Subtitles Found"
 		videoText = ""
 		time = 0
 		for output in res:
