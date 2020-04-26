@@ -5,8 +5,16 @@
             <div class="heading-text text-black">
                 {{ response }}
             </div>
-            <a href="{{ video_url }}"><button class="btn btn-dark">watch video</button></a>
-            <a href="/channel/{{ video_id }}"><button class="btn btn-dark">get channel details</button></a>
+            <a href="{{ video_url }}">
+                <button class="btn btn-dark">watch video</button>
+            </a>
+            <a class="btn btn-dark" data-toggle="collapse" href="#channelDetails"
+               role="button">get channel details</a>
+            <div class="collapse" id="channelDetails">
+                <div class="card card-body">
+                    {{channel_info}}
+                </div>
+            </div>
             <table class="table table-light" id="table-nlp">
                 <thead>
                 <th scope="col">Term</th>

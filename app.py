@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request
 from VideoDetect import VideoDetect
 from youtube_transcript_api import YouTubeTranscriptApi
+from reteriveChannel import *
 app = Flask(__name__)
 
 
@@ -26,7 +27,9 @@ def detect():
         detect = VideoDetect()
         res = detect.detect_video(id)
         word_freq = detect.get_popularVal()
-        return render_template('detect.html', response=res, nlp=detect.ChannelUrls, video_url=url, freq=word_freq, video_id=id)
+        channel_url = get_video_info(id)[0]
+        print(channel_url)
+        return render_template('detect.html', response=res, video_url=url, freq=word_freq, channel_info=detect.get_channel_info(channel_url))
     return render_template('index.html')
 
 

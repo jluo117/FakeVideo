@@ -1,8 +1,9 @@
 from bs4 import BeautifulSoup as bs
 import bisect
 class Channel():
-	def __init__(self,soupData):
+	def __init__(self, soupData):
 		channel_tag = soupData.find("div", attrs={"class": "yt-user-info"}).find("a")
+		print(soupData.find("span", attrs={"class": "yt-subscriber-count"}))
 		self.Channel_Url = f"https://www.youtube.com{channel_tag['href']}"
 		self.Channel_Name = channel_tag.text
 		self.Rating = 0
