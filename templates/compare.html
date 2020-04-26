@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+    <div id="main-container">
+        <div class="container">
+
+            <div id="main-form">
+                <div class="heading-text text-black" style="text-align: left;">
+                    Compare Video Promotion
+                </div>
+                <form method=post action="/compare">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="video1" id="video1"
+                                       placeholder="Video 1 URL">
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="video2" id="video2"
+                                       placeholder="Video 2 URL">
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-dark" type="submit" style="margin-top: 20px">compare</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="heading-no-padding text-black" style="text-align: left;">
+                    Similarity Score: {{ rating }}
+                </div>
+                <table class="table table-light" id="table-nlp">
+                    <thead>
+                    <th scope="col">Term</th>
+                    <th scope="col">Common Occurrences</th>
+                    </thead>
+                    <tbody>
+                    {% for k,v in similarities.items() %}
+                        <tr>
+                            <th scope="col">{{ k }}</th>
+                            <th scope="col">{{ v }}</th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

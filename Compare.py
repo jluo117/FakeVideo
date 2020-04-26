@@ -24,9 +24,10 @@ def compareVideo(VideoOne,VideoTwo):
 	VideoTwoTxt = ""
 	try:
 		resOne = YouTubeTranscriptApi.get_transcript(VideoOne)
+		print(resOne)
 		resTwo = YouTubeTranscriptApi.get_transcript(VideoTwo)
 	except:
-		return "Having issue parsing Subtiles"
+		return False, False
 	for output in resOne:
 		VideoOneTxt += output['text'] + " "
 	for output in resTwo:
@@ -39,4 +40,4 @@ def compareVideo(VideoOne,VideoTwo):
 		if word in VideoTwoBucket:
 			score += min(VideoOneBucket[word],VideoTwoBucket[word])
 			Common[word] = min(VideoOneBucket[word],VideoTwoBucket[word])
-	return str(score) , Common
+	return score, Common
