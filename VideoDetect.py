@@ -93,10 +93,11 @@ class VideoDetect():
 			self.ChannelUrls[ChannelUrl] = channelName
 		self.DataSet[channelName].update_common(massiveBucket)
 		rating = self.DataSet[channelName].get_rating()
-		if maxValue[0] >= time/90 + rating * 5:
-			self.DataSet[channelName].up_vote()
+		if maxValue[0] >= time/90:
+			self.DataSet[channelName].down_vote()
+			print(self.DataSet[channelName].get_rating())
 			return "This video is an advertisement for " + maxValue[1]
-		self.DataSet[channelName].down_vote()
+		self.DataSet[channelName].up_vote()
 		return "This video is not an advertisement"
 	def get_last_info(self):
 		if self.lastChannel == "ERROR" or self.lastChannel == None:
