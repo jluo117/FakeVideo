@@ -7,7 +7,27 @@ import requests
 from Channel import Channel
 from bs4 import BeautifulSoup as bs
 
-
+import editdistance 
+def correctData(Organzation,Proper):
+	massiveBucket = {}
+	for word in Organzation:
+		if word not in massiveBucket:
+			massiveBucket[word] = Organzation[word]
+		else:
+			massiveBucket[word] += Organzation[word]
+	for word in Proper:
+		if word not in massiveBucket:
+			massiveBucket[word] = Proper[word]
+		else:
+			massiveBucket[word] += Proper[word]
+	for word in massiveBucket:
+		if massiveBucket[word] <= 1:
+			for toCompare in massiveBucket:
+				if editdistance.eval(word,toCompare) == 1:
+					massiveBucket[toCompare] += 1
+					massiveBucket[word] = 0
+					break
+	return massiveBucket
 def NLPProcessor(text):
 	OrganizationBucket = {}
 	ProperBucket = {}
@@ -47,12 +67,13 @@ class VideoDetect():
 		print(time/60)
 		OrgValue , ProperValue= NLPProcessor(videoText)
 		maxValue = (0,"")
+		massiveBucket = correctData(OrgValue,ProperValue)
 		for entitiies in OrgValue:
-			maxValue = max(maxValue,(OrgValue[entitiies],entitiies))
-		for entitiies in ProperValue:
-			maxValue = max(maxValue,(ProperValue[entitiies],entitiies))
-		print(OrgValue)
-		print(ProperValue)
+			if massiveBucket[entitiies] == 0:
+				continue
+			maxValue = max(maxValue,(massiveBucket[entitiies],entitiies))
+		
+		
 		print(maxValue[0])
 		channelName , ChannelUrl,soup = rc.get_video_info(url)
 		if channelName == None:
@@ -67,8 +88,7 @@ class VideoDetect():
 			newChannel = Channel(soup)
 			self.DataSet[channelName] = newChannel
 			self.ChannelUrls[ChannelUrl] = channelName
-		self.DataSet[channelName].update_common(OrgValue)
-		self.DataSet[channelName].update_common(ProperValue)
+		self.DataSet[channelName].update_common(massiveBucket)
 		rating = self.DataSet[channelName].get_rating()
 		if maxValue[0] >= time/90 + rating * 5:
 			self.DataSet[channelName].up_vote()
