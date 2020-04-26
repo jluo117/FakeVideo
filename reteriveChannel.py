@@ -5,12 +5,12 @@ def get_video_info(url):
     myUrl = "https://www.youtube.com/watch?v="+url
     print(myUrl)
     content = requests.get(myUrl)
-
+    print(content.content)
 
     # create beautiful soup object to parse HTML
     soup = bs(content.content, "html.parser")
     if soup == None:
-        return None ,None , None
+        return None, None, None
     # initialize the result
     
     channel_tag = soup.find("div", attrs={"class": "yt-user-info"}).find("a")

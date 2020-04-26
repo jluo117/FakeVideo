@@ -55,6 +55,10 @@ iframe {
     color: white !important;
 }
 
+#table-nlp {
+    margin-top: 20px;
+}
+
 .nav-link {
     font-size: 16pt;
 }

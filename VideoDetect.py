@@ -56,6 +56,7 @@ class VideoDetect():
 	def __init__(self):
 		self.ChannelUrls = {}
 		self.DataSet = {}
+		self.OrgValue = None
 		lastChannel = None
 	def detect_video(self , url):
 		res = YouTubeTranscriptApi.get_transcript(url)
@@ -66,6 +67,7 @@ class VideoDetect():
 			time += output['duration']
 		print(time/60)
 		OrgValue , ProperValue= NLPProcessor(videoText)
+		self.OrgValue = OrgValue
 		maxValue = (0,"")
 		massiveBucket = correctData(OrgValue,ProperValue)
 		for entitiies in OrgValue:
@@ -102,7 +104,7 @@ class VideoDetect():
 		returnVal += "Channel Sub: " + self.DataSet[self.lastChannel].get_sub() + ' \n'
 		returnVal += "Channel Rating: " + str(self.DataSet[self.lastChannel].get_rating()) + ' \n'
 		return returnVal
-	def get_channel_info(self,channel):
+	def get_channel_info(self, channel):
 		if channel not in self.DataSet:
 			return "Error"
 		returnVal = "Channel Name: " + channel + '\n'
@@ -115,9 +117,9 @@ class VideoDetect():
 		if channel not in self.DataSet:
 			return "Invalid Channel"
 		KFreq = self.DataSet[channel].get_k_freqWords(K)
-		returnVal = ""
+		returnVal = {}
 		for word in KFreq:
-			returnVal += word[0] + ": " + str(word[1]) + '\n'
+			returnVal[word[0]] = str(word[1])
 		return returnVal
 	def get_channel_name(self,url):
 		if url not in self.ChannelUrls:

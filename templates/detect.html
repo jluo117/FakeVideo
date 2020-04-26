@@ -1,7 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-    lyrics:
-    {% for lyric in lyrics %}
-        <p>{{ lyric }}</p>
-    {% endfor %}
+    <div id="main-container">
+        <div class="container">
+            <div class="heading-text text-black">
+                {{ response }}
+            </div>
+            <a href="{{ video_url }}"><button class="btn btn-dark">watch video</button></a>
+            <a href="/channel/{{ video_id }}"><button class="btn btn-dark">get channel details</button></a>
+            <table class="table table-light" id="table-nlp">
+                <thead>
+                <th scope="col">Term</th>
+                <th scope="col">Occurrences</th>
+                </thead>
+                <tbody>
+                {% for k,v in freq.items() %}
+                    <tr>
+                        <th scope="col">{{ k }}</th>
+                        <th scope="col">{{ v }}</th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
