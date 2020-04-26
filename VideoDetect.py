@@ -56,7 +56,7 @@ class VideoDetect():
 	def __init__(self):
 		self.ChannelUrls = {}
 		self.DataSet = {}
-		lastChannel = None
+		self.lastChannel = None
 	def detect_video(self , url):
 		res = YouTubeTranscriptApi.get_transcript(url)
 		videoText = ""
