@@ -40,4 +40,3 @@ def compareVideo(VideoOne,VideoTwo):
 			score += min(VideoOneBucket[word],VideoTwoBucket[word])
 			Common[word] = min(VideoOneBucket[word],VideoTwoBucket[word])
 	return str(score) , Common
-print(compareVideo("WwfhLC16bis","njTh_OwMljA"))
