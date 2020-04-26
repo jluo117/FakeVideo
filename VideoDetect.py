@@ -13,13 +13,11 @@ def correctData(Organzation,Proper):
 	for word in Organzation:
 		if word not in massiveBucket:
 			massiveBucket[word] = Organzation[word]
-		else:
-			massiveBucket[word] += Organzation[word]
-	# for word in Proper:
-	# 	if word not in massiveBucket:
-	# 		massiveBucket[word] = Proper[word]
-	# 	else:
-	# 		massiveBucket[word] += Proper[word]
+		
+	for word in Proper:
+		if word not in massiveBucket:
+			massiveBucket[word] = Proper[word]
+		
 	for word in massiveBucket:
 		if massiveBucket[word] <= 1:
 			for toCompare in massiveBucket:
